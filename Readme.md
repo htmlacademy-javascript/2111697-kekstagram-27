@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Артур Лимайко](https://up.htmlacademy.ru/javascript/27/user/2111697).
-* Наставник: `Неизвестно`.
+* Наставник: [Arthur Litovko](https://github.com/baileys-li).
 
 ---
 
