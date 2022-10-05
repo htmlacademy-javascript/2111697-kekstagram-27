@@ -1,6 +1,6 @@
 checkMaxLengthString('verifiedString.', 2000);
 
-console.log(getRandomIntegerWithChecks(22, 10));
+getRandomIntegerWithChecks(22, 10);
 
 /**
  * Функция для проверки максимальной длины строки.
@@ -35,7 +35,7 @@ function getRandomIntegerWithChecks(first, second) {
   first = Math.ceil(first);
   second = Math.floor(second);
 
-  getRandomInteger (first, second);
+  return getRandomInteger (first, second);
 }
 
 /**
