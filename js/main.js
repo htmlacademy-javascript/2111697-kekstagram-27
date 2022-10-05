@@ -8,7 +8,7 @@
 function checkMaxLengthString (verifiedString, maxLength = 56){
   return verifiedString.length <= maxLength;
 }
-
+checkMaxLengthString();
 /**
  * Возвращает случайное число в заданном диапазоне и проверяет на типы и что числа положительные
  * @param {number} first Положительное число
@@ -31,5 +31,6 @@ function getRandomIntegerWithChecks(first, second) {
   first = Math.ceil(first);
   second = Math.floor(second);
 
-  return getRandomInteger(first, second);
+  return getRandomIntegerWithChecks(first, second);
 }
+getRandomIntegerWithChecks();
