@@ -1,6 +1,4 @@
-checkMaxLengthString('verifiedString.', 2000);
-
-getRandomIntegerWithChecks(22, 10);
+import { getRandomInteger, getRandomArrayElement } from './random.js';
 
 /**
  * Функция для проверки максимальной длины строки.
@@ -9,96 +7,47 @@ getRandomIntegerWithChecks(22, 10);
  * @param {boolean} result Подходит ли строка по длине
  */
 
-function checkMaxLengthString(verifiedString, maxLength = 56){
-  return verifiedString.length <= maxLength;
-}
+const checkMaxLengthString = (verifiedString, maxLength = 56) =>
+  verifiedString.length <= maxLength;
 
+checkMaxLengthString('asdasd');
 
-/**
- * @param {*} first Предпочительно положительное число
- * @param {*} second Предпочительно положительное число
- * @returns {number} Случайное целое число в заданном промежутке включительно или `NaN`, если аргументы не подходящие
- */
-function getRandomIntegerWithChecks(first, second) {
-  if (typeof first !== 'number' || typeof second !== 'number') {
-    return NaN;
-  }
+const DESCRIPTIONS = [
+  'Всё отлично.',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+  'Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле.',
+];
 
-  if (first < 0 || second < 0) {
-    return NaN;
-  }
+const NAMES = ['Артём', 'Валера', 'Алексей', 'Юля', 'Катя', 'Алла'];
 
-  if (second < first) {
-    [first, second] = [second, first];
-  }
+const commentsIDs = [];
 
-  first = Math.ceil(first);
-  second = Math.floor(second);
+const getRandomCommentID = () => {
+  const randomID = getRandomInteger(1, 9999999);
 
-  return getRandomInteger (first, second);
-}
+  return commentsIDs.includes(randomID) ? getRandomCommentID() : randomID;
+};
 
-/**
- * На основе материала {@link https://learn.javascript.ru/task/random-int-min-max| Learn JS}
-@param {number} from Целое положительное число
-@param {number} to Целое положительное число, которое больше предыдущего
-@returns {number} Случайное число в заданном промежутке включительно
-*/
-function getRandomInteger(from, to) {
-  const randomNumber = from + Math.random() * (to + 1 - from);
-  return Math.floor (randomNumber);
-}
-
-
-// В файле main.js на основе написанных по заданию ранее вспомогательных функций напишите необходимые функции для создания массива из 25 сгенерированных объектов. Каждый объект массива — описание фотографии, опубликованной пользователем.
-
-// Структура каждого объекта должна быть следующей:
-
-
-const id = getRandomInteger(1, 25) // id, число — идентификатор опубликованной фотографии. Это число от 1 до 25. Идентификаторы не должны повторяться.
-
-const url = 'photos/' + getRandomInteger(1, 25) + '.jpg'// url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-
-const description = '' // description, строка — описание фотографии. Описание придумайте самостоятельно.
-
-const likes = getRandomInteger(15, 200)// likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-
-const comments = // comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом. Пример описания объекта с комментарием:
-
-// {
-//   id: 135,
-//   avatar: 'img/avatar-6.svg',
-//   message: 'В целом всё неплохо. Но не всё.',
-//   name: 'Артём',
-// }
-// У каждого комментария есть идентификатор — id — случайное число. Идентификаторы не должны повторяться.
-
-// Поле avatar — это строка, значение которой формируется по правилу img/avatar-{{случайное число от 1 до 6}}.svg. Аватарки подготовлены в директории img.
-
-// Для формирования текста комментария — message — вам необходимо взять одно или два случайных предложения из представленных ниже:
-
-// Всё отлично!
-// В целом всё неплохо. Но не всё.
-// Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.
-// Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.
-// Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.
-// Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!
-// Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
-
-const getPhoto = () => {
+const getComment = function () {
   return {
-    id: ,
-    url: ,
-    description: '',
-    likes: ,
-
-    comments: {
-      id: 135,
-      avatar: 'img/avatar-6.svg',
-      message: 'В целом всё неплохо. Но не всё.',
-      name: 'Артём',
-    }
+    id: getRandomCommentID(),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(DESCRIPTIONS),
+    name: getRandomArrayElement(NAMES),
   };
 };
 
+const getPhoto = (_, index) => ({
+  id: index,
+  url: `photos/${getRandomInteger(1, 25)}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(15, 200),
+  comments: Array.from({ length: getRandomInteger(0, 30) }, getComment),
+});
+
+Array.from({ length: 25 }, getPhoto);
 
