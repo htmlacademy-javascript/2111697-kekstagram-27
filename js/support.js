@@ -1,4 +1,18 @@
 /**
+ * Функция для проверки максимальной длины строки.
+ * @param {string} verifiedString Входная строка
+ * @param {number} [maxLength = 56] Максимальная длина*
+ * @param {boolean} result Подходит ли строка по длине
+ */
+
+const checkMaxLengthString = (verifiedString, maxLength = 56) =>
+  verifiedString.length <= maxLength;
+
+checkMaxLengthString('asdasd');
+
+
+/**
+ * Функция генерации рандомного числа.
  * На основе материала {@link https://learn.javascript.ru/task/random-int-min-max| Learn JS}
 @param {number} from Целое положительное число
 @param {number} to Целое положительное число, которое больше предыдущего
@@ -8,6 +22,7 @@ const getRandomInteger = (from, to) => {
   const randomNumber = from + Math.random() * (to + 1 - from);
   return Math.floor(randomNumber);
 };
+
 
 /**
  * @param {*} first Предпочительно положительное число
