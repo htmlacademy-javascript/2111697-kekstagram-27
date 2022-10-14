@@ -1,4 +1,4 @@
-import { getRandomInteger, getRandomArrayElement } from './support.js';
+import { getRandomInteger, getRandomArrayElement } from './random.js';
 
 
 const DESCRIPTIONS = [
@@ -43,14 +43,23 @@ const getComment = function () {
     name: getRandomArrayElement(NAMES),
   };
 };
+/**
+ *
+ * @param {undefined} _ не используется
+ * @param {number} index начинается с 0
+ * @returns
+ */
 
-const getPhoto = (_, index) => ({
-  id: index,
-  url: `photos/${getRandomInteger(1, 25)}.jpg`,
-  description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
-  comments: Array.from({ length: getRandomInteger(0, 30) }, getComment),
-});
+const getPhoto = (_, index) => {
+  const id = index + 1;
+  return {
+    id,
+    url: `photos/${id}.jpg`,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomInteger(15, 200),
+    comments: Array.from({ length: getRandomInteger(0, 30) }, getComment),
+  };
+};
 
-console.log(Array.from({ length: 25 }, getPhoto));
+Array.from({ length: 25 }, getPhoto);
 

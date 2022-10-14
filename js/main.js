@@ -1,3 +1,3 @@
 import './data.js';
-import './support.js';
+import './random.js';
 
