@@ -50,7 +50,7 @@ const getComment = function () {
  * @returns
  */
 
-const getPhoto = (_, index) => {
+export const getPhoto = (_, index) => {
   const id = index + 1;
   return {
     id,
@@ -61,5 +61,4 @@ const getPhoto = (_, index) => {
   };
 };
 
-Array.from({ length: 25 }, getPhoto);
-
+export default Array.from({ length: 25 }, getPhoto);
