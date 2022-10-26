@@ -47,7 +47,6 @@ const getComment = function () {
  *
  * @param {undefined} _ не используется
  * @param {number} index начинается с 0
- * @returns
  */
 
 export const getPhoto = (_, index) => {
