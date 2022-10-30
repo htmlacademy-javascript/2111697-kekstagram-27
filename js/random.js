@@ -56,4 +56,13 @@ const getRandomIntegerWithChecks = (first, second) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
-export { getRandomInteger, getRandomIntegerWithChecks, getRandomArrayElement };
+/**
+ *
+ * @param {*} evt
+ * @returns
+ */
+const isEscapeKey = function (evt) {
+  return evt.key === 'Escape';
+};
+
+export { getRandomInteger, getRandomIntegerWithChecks, getRandomArrayElement, isEscapeKey};
