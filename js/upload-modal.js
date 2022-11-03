@@ -1,4 +1,6 @@
 import {isEscapeKey} from './utils.js';
+import {resetScale} from './scale.js';
+
 /** @type {HTMLFormElement} */
 const uploadForm = document.querySelector('.img-upload__form');
 
@@ -35,6 +37,7 @@ const toggleModalState = (toOpen = true) => () => {
   } else{
     document.removeEventListener('keydown', closeModalOnEscape);
   }
+  resetScale();
 };
 
 imgUploadStart.addEventListener('change', toggleModalState(true));
