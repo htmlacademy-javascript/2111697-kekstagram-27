@@ -1,3 +1,3 @@
 import './photo-user.js';
-import './download-overlay.js';
+import './upload-modal.js';
 import './validate-form.js';
