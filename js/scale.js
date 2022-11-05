@@ -6,7 +6,7 @@ const buggerButton = document.querySelector('.scale__control--bigger');
 const scaleInputControl = document.querySelector('.scale__control--value');
 
 //находим окно предварительного просмотра изображения
-const imagePreview = document.querySelector ('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 //создаем константы  мин и макс масштаб, масштаб по умолчанию и шаг масштабирования
 const SCALE_STEP = 25;

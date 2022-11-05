@@ -1,61 +1,70 @@
 //находим окно предварительного просмотра изображения
-const imagePreview = document.querySelector ('.img-upload__preview');
+const imagePreview = document.querySelector ('.img-upload__preview img');
 
 //Находим поле для загрузки нового изображения на сайт
 const uploadForm = document.querySelector('.img-upload__form');
 
 //инпут эффекта
-const effectLevel = document.querySelector('.effect-level__value');
+const effectLevel = uploadForm['effect-level'];
 
 //Находим слайдер
 const sliderElement = document.querySelector('.effect-level__slider');
+
+
+const FROM_ZERO_TO_HUNDRED = {
+  min: 0,
+  max: 100,
+  step: 1,
+};
+
+const FROM_ZERO_TO_ONE = {
+  min: 0,
+  max: 1,
+  step: 0.1,
+};
+
+
+const FROM_ZERO_TO_THREE = {
+  min: 0,
+  max: 3,
+  step: 0.1,
+};
+
 
 //массив объектов с эффектами
 const EFFECTS = [
   {
     name: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
+    ...FROM_ZERO_TO_HUNDRED
   },
   {
     name: 'chrome',
     style: 'grayscale',
-    min: 0.1,
-    max: 1,
-    step: 0.1,
+    ...FROM_ZERO_TO_ONE,
     unit: '',
   },
   {
     name: 'sepia',
     style: 'sepia',
-    min: 0.1,
-    max: 1,
-    step: 0.1,
+    ...FROM_ZERO_TO_ONE,
     unit: '',
   },
   {
     name: 'marvin',
     style: 'invert',
-    min: 0,
-    max: 100,
-    step: 1,
+    ...FROM_ZERO_TO_HUNDRED,
     unit: '%',
   },
   {
     name: 'phobos',
     style: 'blur',
-    min: 0,
-    max: 3,
-    step: 0.1,
+    ...FROM_ZERO_TO_THREE,
     unit: 'px',
   },
   {
     name: 'heat',
     style: 'brightness',
-    min: 0,
-    max: 3,
-    step: 0.1,
+    ...FROM_ZERO_TO_THREE,
     unit: '',
   },
 ];
@@ -129,6 +138,7 @@ noUiSlider.create(sliderElement, {
   step: DEFAULT_EFFECT.step,
   connect: 'lower',
 });
+//для обновления слайдера
 updateSlider();
 
 //нашли форму, добавили обработчик
