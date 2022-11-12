@@ -1,5 +1,5 @@
 import mockPhotos from './mock.js';
-
+import {getPhotosFromServer} from './api.js';
 /** контейнер для изображений от других пользователей */
 const imgContainer = document.querySelector('.pictures');
 
@@ -25,3 +25,10 @@ for (const photo of mockPhotos) {
 }
 
 imgContainer.append(photoBox);
+
+//функция отрисовки фото
+const renderPhotos = (photos) => {
+  console.log(renderPhotos);
+};
+
+getPhotosFromServer();
