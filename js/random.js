@@ -1,5 +1,3 @@
-
-
 /**
  * Функция генерации рандомного числа.
  * На основе материала {@link https://learn.javascript.ru/task/random-int-min-max| Learn JS}

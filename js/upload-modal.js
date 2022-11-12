@@ -9,6 +9,8 @@ const imgUploadStart = uploadForm.querySelector('#upload-file');
 // находим форму редактирования изображения
 const editFormImage = uploadForm.querySelector('.img-upload__overlay');
 
+//находим кнопку отправки данных на сервер
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 /**
  * функцию закрытия на клавишу ESC
  * @param {KeyboardEvent} evt
@@ -26,7 +28,6 @@ const closeModalOnEscape = (evt) => {
   }
 };
 
-
 const toggleModalState = (toOpen = true) => () => {
   editFormImage.classList.toggle('hidden', !toOpen);
   document.body.classList.toggle('modal-open', toOpen);
@@ -42,3 +43,15 @@ const toggleModalState = (toOpen = true) => () => {
 
 imgUploadStart.addEventListener('change', toggleModalState(true));
 uploadForm.addEventListener('reset', toggleModalState(false));
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+export {blockSubmitButton, unblockSubmitButton, closeModalOnEscape};

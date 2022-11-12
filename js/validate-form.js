@@ -1,3 +1,7 @@
+import {unblockSubmitButton,blockSubmitButton,closeModalOnEscape} from './upload-modal.js';
+import {createFormModalMessage} from './utils.js';
+import {sendData} from './api.js';
+
 const HASTAG_REGEXP = /^#[a-zа-яё0-9]{1,20}$/i;
 
 /** @type {HTMLFormElement} */
@@ -66,6 +70,16 @@ uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const isValid = pristine.validate();
+  if(isValid) {
+    blockSubmitButton();
+    sendData(
+      () => {
+        closeModalOnEscape();
+        unblockSubmitButton();
+
+        createFormModalMessage('success');
+      });
+  }
 
   // eslint-disable-next-line no-console
   console.log(isValid ? 'Можно отправлять' : 'Форма невалидна');
