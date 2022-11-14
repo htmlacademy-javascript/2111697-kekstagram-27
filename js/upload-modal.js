@@ -54,4 +54,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-export {blockSubmitButton, unblockSubmitButton, closeModalOnEscape};
+const closeAndResetModal = () => uploadForm.reset();
+
+export {blockSubmitButton, unblockSubmitButton, closeModalOnEscape, closeAndResetModal};

@@ -67,7 +67,10 @@ const removeFormModalMessage = (modal,closeButton) => {
     modal.removeEventListener('click', onModalClick);
   }
 };
-
+/**
+ *
+ * @param {'success' | 'error'} type
+ */
 const createFormModalMessage = (type) => {
   const templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
   const templateerrorMessage = document.querySelector('#error').content.querySelector('.error');
@@ -84,13 +87,4 @@ const createFormModalMessage = (type) => {
   body.append(message);
 };
 
-const debounce = (callback, timeoutDelay = 500) => {
-  let timeoutId;
-
-  return (...rest) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
-
-export {isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage, debounce};
+export {isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage};
