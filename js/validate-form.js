@@ -65,8 +65,6 @@ pristine.addValidator(hashtagsInput, validateHashtags, () => hashtagsInput.valid
 
 // pristine.addValidator(uploadForm.querySelector())
 
-createFormModalMessage('success');
-
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
