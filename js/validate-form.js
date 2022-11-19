@@ -1,3 +1,7 @@
+import { unblockSubmitButton, blockSubmitButton, closeAndResetModal } from './upload-modal.js';
+import { createFormModalMessage } from './utils.js';
+import { sendData } from './api.js';
+
 const HASTAG_REGEXP = /^#[a-zа-яё0-9]{1,20}$/i;
 
 /** @type {HTMLFormElement} */
@@ -8,12 +12,9 @@ descriptionTextarea.dataset.pristineMaxlengthMessage = `Длина коммен�
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
-  // errorClass:
-  // successClass:
   errorTextParent: 'img-upload__field-wrapper',
-  // errorTextTag:
-  // errorTextClass:
 });
+
 /**
  *
  * @param {string} value
@@ -34,7 +35,6 @@ const validateHashtags = (value) => {
   }
 
   return hashTags.every((hashtag) => {
-
     if (hashtag[0] !== '#') {
       hashtagsInput.setCustomValidity('Хэш-тег начинается с символа # (решётка)');
       return false;
@@ -46,15 +46,18 @@ const validateHashtags = (value) => {
     }
 
     if (hashtag.length > 20) {
-      hashtagsInput.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+      hashtagsInput.setCustomValidity(
+        'максимальная длина одного хэш-тега 20 символов, включая решётку'
+      );
       return false;
     }
     if (!HASTAG_REGEXP.test(hashtag)) {
-      hashtagsInput.setCustomValidity('должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;');
+      hashtagsInput.setCustomValidity(
+        'должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;'
+      );
       return false;
     }
     return true;
-
   });
 };
 
@@ -67,6 +70,21 @@ uploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
 
-  // eslint-disable-next-line no-console
-  console.log(isValid ? 'Можно отправлять' : 'Форма невалидна');
+  if (isValid) {
+    blockSubmitButton();
+
+    const data = new FormData(uploadForm);
+
+    sendData(
+      () => {
+        unblockSubmitButton();
+        createFormModalMessage('success');
+        closeAndResetModal();
+      },
+      () => {
+        unblockSubmitButton();
+        createFormModalMessage('error');
+      },
+      data);
+  }
 });
