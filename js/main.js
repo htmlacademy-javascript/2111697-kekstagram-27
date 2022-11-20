@@ -1,4 +1,4 @@
-import './photo-user.js';
+import './filters.js';
 import './upload-modal.js';
 import './validate-form.js';
 import './scale.js';
