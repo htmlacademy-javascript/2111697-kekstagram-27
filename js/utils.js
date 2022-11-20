@@ -149,5 +149,28 @@ const shuffleArray = (array) => {
   return array;
 };
 
+/**
+ *Разметка каждого комментария должна выглядеть так:
+
+<li class="social__comment">
+    <img
+        class="social__picture"
+        src="{{аватар}}"
+        alt="{{имя комментатора}}"
+        width="35" height="35">
+    <p class="social__text">{{текст комментария}}</p>
+</li>
+ */
+
+const createDOMElement = (element, elementClass) => {
+  const object = document.createElement(element);
+  object.classList.add(elementClass);
+  if (object === 'img') {
+    object.width = '35';
+    object.height = '35';
+  }
+  return object;
+};
+
 export { isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage, debounce, throttle,
-  shuffleArray };
+  shuffleArray,createDOMElement };
