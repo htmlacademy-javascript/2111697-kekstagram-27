@@ -1,4 +1,4 @@
-import {getPhotosFromServer} from './api.js';
+// import { showBigPicture } from './big-picture.js';
 
 /** контейнер для изображений от других пользователей */
 const imgContainer = document.querySelector('.pictures');
@@ -9,7 +9,7 @@ const imgContainer = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture').content.firstElementChild;
 
 //функция отрисовки фото
-const renderPhotos = (photos) => {
+export const renderPhotos = (photos) => {
   /** создаем пустой фрагмент(предварительная обёртка)
    */
   const photoBox = document.createDocumentFragment();
@@ -23,10 +23,11 @@ const renderPhotos = (photos) => {
     photoElement.querySelector('.picture__likes').textContent = photo.likes;
     photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
 
+    // photoTemplate.addEventListener('click', () => {
+    //   showBigPicture(photos);
+    // });
     photoBox.append(photoElement);
   }
   //после всей сделаной разметки ,вызываем в самом конце
   imgContainer.append(photoBox);
 };
-
-getPhotosFromServer(renderPhotos);

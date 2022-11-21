@@ -1,4 +1,3 @@
-
 const body = document.body;
 const ALERT_SHOW_TIME = 5000;
 /**
@@ -8,7 +7,8 @@ const ALERT_SHOW_TIME = 5000;
  * @param {boolean} result Подходит ли строка по длине
  */
 
-const checkMaxLengthString = (verifiedString, maxLength = 140) => verifiedString.length <= maxLength;
+const checkMaxLengthString = (verifiedString, maxLength = 140) =>
+  verifiedString.length <= maxLength;
 
 /**
  * @param {KeyboardEvent} evt
@@ -30,7 +30,8 @@ const showAlert = () => {
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
 
-  alertContainer.textContent = 'Не удалось загрузить фотографии. Попробуйте ещё раз через некоторое время';
+  alertContainer.textContent =
+    'Не удалось загрузить фотографии. Попробуйте ещё раз через некоторое время';
 
   document.body.append(alertContainer);
 
@@ -39,9 +40,9 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const removeFormModalMessage = (modal,closeButton) => {
+const removeFormModalMessage = (modal, closeButton) => {
   const onModalClick = (evt) => {
-    if(!evt.target.closest(`.${modal.className}__inner`)){
+    if (!evt.target.closest(`.${modal.className}__inner`)) {
       destroyModal();
     }
   };
@@ -49,7 +50,7 @@ const removeFormModalMessage = (modal,closeButton) => {
   modal.addEventListener('click', onModalClick);
 
   const onDocumentKeydown = (evt) => {
-    if(isEscapeKey(evt)){
+    if (isEscapeKey(evt)) {
       destroyModal();
     }
   };
@@ -57,11 +58,15 @@ const removeFormModalMessage = (modal,closeButton) => {
   document.addEventListener('keydown', onDocumentKeydown);
 
   const cancel = modal.querySelector(closeButton);
-  cancel.addEventListener('click', () => {
-    destroyModal();
-  },{once:true});
+  cancel.addEventListener(
+    'click',
+    () => {
+      destroyModal();
+    },
+    { once: true }
+  );
 
-  function destroyModal () {
+  function destroyModal() {
     body.lastChild.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
     modal.removeEventListener('click', onModalClick);
@@ -72,19 +77,100 @@ const removeFormModalMessage = (modal,closeButton) => {
  * @param {'success' | 'error'} type
  */
 const createFormModalMessage = (type) => {
-  const templateSuccessMessage = document.querySelector('#success').content.querySelector('.success');
+  const templateSuccessMessage = document
+    .querySelector('#success')
+    .content.querySelector('.success');
   const templateerrorMessage = document.querySelector('#error').content.querySelector('.error');
-  const template = type === 'success'
-    ? templateSuccessMessage
-    : templateerrorMessage;
+  const template = type === 'success' ? templateSuccessMessage : templateerrorMessage;
 
-  const buttonClass = type === 'success'
-    ? '.success__button'
-    : '.error__button';
+  const buttonClass = type === 'success' ? '.success__button' : '.error__button';
 
   const message = template.cloneNode(true);
   removeFormModalMessage(message, buttonClass);
   body.append(message);
 };
 
-export {isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage};
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+
+function debounce(callback, timeoutDelay = 500) {
+  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
+  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
+  let timeoutId;
+
+  return (...rest) => {
+    // Перед каждым новым вызовом удаляем предыдущий таймаут,
+    // чтобы они не накапливались
+    clearTimeout(timeoutId);
+
+    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
+    // пока действие совершается чаще, чем переданная задержка timeoutDelay
+  };
+}
+
+// Функция взята из интернета и доработана
+// Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_throttle
+
+function throttle(callback, delayBetweenFrames) {
+  // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
+  // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
+  let lastTime = 0;
+
+  return (...rest) => {
+    // Получаем текущую дату в миллисекундах,
+    // чтобы можно было в дальнейшем
+    // вычислять разницу между кадрами
+    const now = new Date();
+
+    // Если время между кадрами больше задержки,
+    // вызываем наш колбэк и перезаписываем lastTime
+    // временем "последнего кадра"
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+}
+
+/**
+ * Перемешиват переданный массив
+ * @template Type
+ * @param {Type[]} array
+ */
+
+const shuffleArray = (array) => {
+  for (let index = array.length - 1; index > 0; index--) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [array[index], array[randomIndex]] = [array[randomIndex], array[index]];
+  }
+  return array;
+};
+
+/**
+ *Разметка каждого комментария должна выглядеть так:
+
+<li class="social__comment">
+    <img
+        class="social__picture"
+        src="{{аватар}}"
+        alt="{{имя комментатора}}"
+        width="35" height="35">
+    <p class="social__text">{{текст комментария}}</p>
+</li>
+ */
+
+const createDOMElement = (element, elementClass) => {
+  const object = document.createElement(element);
+  object.classList.add(elementClass);
+  if (object === 'img') {
+    object.width = '35';
+    object.height = '35';
+  }
+  return object;
+};
+
+export { isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage, debounce, throttle,
+  shuffleArray,createDOMElement };

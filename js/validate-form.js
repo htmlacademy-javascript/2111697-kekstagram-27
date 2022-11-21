@@ -63,8 +63,6 @@ const validateHashtags = (value) => {
 
 pristine.addValidator(hashtagsInput, validateHashtags, () => hashtagsInput.validationMessage);
 
-// pristine.addValidator(uploadForm.querySelector())
-
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
