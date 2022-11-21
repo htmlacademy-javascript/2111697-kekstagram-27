@@ -1,4 +1,3 @@
-import { getPhotosFromServer } from './api.js';
 import { renderPhotos } from './render-photos.js';
 import { debounce, shuffleArray } from './utils.js';
 
@@ -57,21 +56,14 @@ export const initFilters = (photos) => {
       }
 
       if (clickedButton === randomButton) {
-        if (randomButton !== clickedButton) {
+        if (randomButton === clickedButton) {
           clearPhotos();
         }
 
-        const randomizerPhotos = shuffleArray([...photos]);
+        const randomizedPhotos = shuffleArray([...photos]);
 
-        return renderPhotos(randomizerPhotos.slice(0, 10));
+        return renderPhotos(randomizedPhotos.slice(0, 10));
       }
-      // switch (evt.target.id) {
-      //   case value:
-      //     break;
-
-      //   default:
-      //     break;
-      // }
     }
   };
 
@@ -79,6 +71,3 @@ export const initFilters = (photos) => {
 
   filtersForm.addEventListener('click', debounceClickHandler);
 };
-
-//получаем все фото
-getPhotosFromServer(initFilters);

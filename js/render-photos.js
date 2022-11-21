@@ -1,4 +1,4 @@
-import { showBigPicture } from './big-picture.js';
+// import { showBigPicture } from './big-picture.js';
 
 /** контейнер для изображений от других пользователей */
 const imgContainer = document.querySelector('.pictures');
@@ -23,9 +23,9 @@ export const renderPhotos = (photos) => {
     photoElement.querySelector('.picture__likes').textContent = photo.likes;
     photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
 
-    photoTemplate.addEventListener('click', () => {
-      showBigPicture(photos);
-    });
+    // photoTemplate.addEventListener('click', () => {
+    //   showBigPicture(photos);
+    // });
     photoBox.append(photoElement);
   }
   //после всей сделаной разметки ,вызываем в самом конце
