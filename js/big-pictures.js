@@ -1,6 +1,9 @@
 import { createDOMElement } from './utils.js';
 import { isEscapeKey } from './utils.js';
 
+//зададим константу равную 5
+const COMMENTS_STEP = 5;
+
 const body = document.body;
 const fullPicture = document.querySelector('.big-picture');
 const socialComments = fullPicture.querySelector('.social__comments');
@@ -16,10 +19,28 @@ const commentCount = fullPicture.querySelector('.social__comment-count');
 const newComment = fullPicture.querySelector('.comments-loader');
 const cancelButton = fullPicture.querySelector('.big-picture__cancel');
 
+//переменную с числом 5
+let countNumber = COMMENTS_STEP;
+
+//Отображение дополнительных комментариев происходит при нажатии на кнопку .comments-loader
+const loadComments = fullPicture.querySelector('.comments-loader');
 
 const renderComments = (comments) => {
+  const count = fullPicture.querySelector('.comments-count');
+  //константа с количеством отображения комментариев (от и до)
+  const commentsSlice = comments.slice(0, countNumber);
+
+  count.textContent = commentsSlice.length;
+  socialComments.innerHTML = '';
+
   //создаём фрагмент
   const commentFragments = document.createDocumentFragment();
+
+  //условие - если количество  загруженных комментариев больше 5
+  // то добавляем класс hidden
+  if (comments.length === commentsSlice.length) {
+    loadComments.classList.add('hidden');
+  }
 
   //переберем список методом forEach и создадим функцию с комментарием
   comments.forEach(({ avatar, name, message }) => {
@@ -52,6 +73,9 @@ const toggleClasses = (toOpen = true) => {
 
 //обернем все в одну функцию
 const showBigPicture = ({ url, likes, comments, description }) => {
+
+  //при клике подгружаем дополнительные комментарии
+  loadComments.removeEventListener('click', onLoadCommntsClick);
   toggleClasses(true);
 
   /**При закрытии окна не забудьте удалить этот класс. */
@@ -82,13 +106,31 @@ const showBigPicture = ({ url, likes, comments, description }) => {
 
   descriptionPhoto.textContent = description;
 
-
   //После открытия окна спрячьте блоки счётчика комментариев .social__comment-count и
   //загрузки новых комментариев .comments-loader, добавив им класс hidden
   commentCount.classList.add('hidden');
   newComment.classList.add('hidden');
+  //скрытие комментариев
+  loadComments.classList.add('hidden');
   socialComments.innerHTML = '';
   renderComments(comments);
+
+
+  /**
+   * функция подгрузки комментариев
+   */
+  function onLoadCommntsClick() {
+    countNumber += COMMENTS_STEP;
+    renderComments();
+  }
+
+  loadComments.addEventListener('click', onLoadCommntsClick);
+  renderComments();
+
+  if (comments.length > COMMENTS_STEP) {
+    commentCount.classList.remove('hidden');
+    loadComments.classList.remove('hidden');
+  }
 };
 
 export { showBigPicture };
