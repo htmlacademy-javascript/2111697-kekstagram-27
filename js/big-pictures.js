@@ -18,7 +18,7 @@ const initCommentsOnOpen = initComments(fullPicture);
 
 const toggleClasses = (toOpen = true) => {
   fullPicture.classList.toggle('hidden', !toOpen);
-  body.classList.add('modal-open', toOpen);
+  body.classList.toggle('modal-open', toOpen);
 };
 
 const showBigPicture = ({ url, likes, comments, description }) => {
