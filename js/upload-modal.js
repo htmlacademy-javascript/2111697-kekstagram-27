@@ -1,13 +1,20 @@
 import {isEscapeKey} from './utils.js';
 import {resetScale} from './scale.js';
 
+const PHOTO_TYPES = ['jpg', 'jpeg', 'png'];
+
 /** @type {HTMLFormElement} */
 const uploadForm = document.querySelector('.img-upload__form');
 
 /** @type {HTMLInputElement} поле загрузки нового изображения */
 const imgUploadStart = uploadForm.querySelector('#upload-file');
+
 // находим форму редактирования изображения
 const editFormImage = uploadForm.querySelector('.img-upload__overlay');
+
+const selectedPhoto = uploadForm.querySelector('.img-upload__preview img');
+
+const fileChooser = uploadForm.querySelector('.img-upload__input');
 
 //находим кнопку отправки данных на сервер
 const submitButton = uploadForm.querySelector('.img-upload__submit');
@@ -15,34 +22,39 @@ const submitButton = uploadForm.querySelector('.img-upload__submit');
  * функцию закрытия на клавишу ESC
  * @param {KeyboardEvent} evt
  */
-const closeModalOnEscape = (evt) => {
+const onKeydownCloseModal = (evt) => {
 
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     const {tagName} = evt.target;
 
     /** Если инпут или текстареа в активном состоянии, то мы не реагируем на `Esc` */
-    if (tagName !== 'INPUT' || tagName !== 'TEXTAREA') {
+    if (tagName !== 'INPUT' && tagName !== 'TEXTAREA') {
       uploadForm.reset();
     }
   }
 };
 
-const toggleModalState = (toOpen = true) => () => {
+const onChangeModalState = (toOpen = true) => () => {
   editFormImage.classList.toggle('hidden', !toOpen);
   document.body.classList.toggle('modal-open', toOpen);
-
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = PHOTO_TYPES.some((it) => fileName.endsWith(it));
+  if(matches) {
+    selectedPhoto.src = URL.createObjectURL(file);
+  }
   //закрытие происходит по нажатию клавиши ESC
   if (toOpen) {
-    document.addEventListener('keydown', closeModalOnEscape);
+    document.addEventListener('keydown', onKeydownCloseModal);
   } else{
-    document.removeEventListener('keydown', closeModalOnEscape);
+    document.removeEventListener('keydown', onKeydownCloseModal);
   }
   resetScale();
 };
 
-imgUploadStart.addEventListener('change', toggleModalState(true));
-uploadForm.addEventListener('reset', toggleModalState(false));
+imgUploadStart.addEventListener('change', onChangeModalState(true));
+uploadForm.addEventListener('reset', onChangeModalState(false));
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -56,4 +68,4 @@ const unblockSubmitButton = () => {
 
 const closeAndResetModal = () => uploadForm.reset();
 
-export {blockSubmitButton, unblockSubmitButton, closeModalOnEscape, closeAndResetModal};
+export {blockSubmitButton, unblockSubmitButton, onKeydownCloseModal as closeModalOnEscape, closeAndResetModal};

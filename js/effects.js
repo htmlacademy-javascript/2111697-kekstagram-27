@@ -8,8 +8,9 @@ const uploadForm = document.querySelector('.img-upload__form');
 const effectLevel = uploadForm['effect-level'];
 
 //Находим слайдер
-const sliderElement = document.querySelector('.effect-level__slider');
+const sliderElement = uploadForm.querySelector('.effect-level__slider');
 
+const sliderWrapper = sliderElement.parentElement;
 
 const FROM_ZERO_TO_HUNDRED = {
   min: 0,
@@ -70,13 +71,14 @@ const EFFECTS = [
 ];
 
 const DEFAULT_EFFECT = EFFECTS[0];
+sliderWrapper.classList.add('hidden');
 let chosenEffect = DEFAULT_EFFECT;
 
-//не совсем понимаю эту функцию
+
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
 const updateSlider = () => {
-  sliderElement.classList.remove('hidden');
+  sliderWrapper.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: chosenEffect.min,
@@ -87,7 +89,7 @@ const updateSlider = () => {
   });
 
   if(isDefault()) {
-    sliderElement.classList.add('hidden');
+    sliderWrapper.classList.add('hidden');
   }
 };
 

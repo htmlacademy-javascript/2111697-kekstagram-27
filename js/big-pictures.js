@@ -7,9 +7,9 @@ const fullPicture = document.querySelector('.big-picture');
 //Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
 const imageElement = fullPicture.querySelector('.big-picture__img img');
 //Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
-const likesCount = fullPicture.querySelector('.likes-count');
+const likesCountElement = fullPicture.querySelector('.likes-count');
 //Количество комментариев comments подставьте как текстовое содержание элемента .comments-count.
-const comment = fullPicture.querySelector('.comments-count');
+const commentElement = fullPicture.querySelector('.comments-count');
 //Описание фотографии description вставьте строкой в блок .social__caption.
 const descriptionPhoto = fullPicture.querySelector('.social__caption');
 const cancelButton = fullPicture.querySelector('.big-picture__cancel');
@@ -34,12 +34,12 @@ const showBigPicture = ({ url, likes, comments, description }) => {
 
   cancelButton.addEventListener('click', () => {
     closeBigPicture();
-    document.removeEventListener('keydown', onEscapeClose);
+    document.removeEventListener('keydown', onKeydownEscapeClose);
   });
 
-  document.addEventListener('keydown', onEscapeClose);
+  document.addEventListener('keydown', onKeydownEscapeClose);
 
-  function onEscapeClose(evt) {
+  function onKeydownEscapeClose(evt) {
     if (isEscapeKey(evt)) {
       closeBigPicture();
     }
@@ -47,9 +47,9 @@ const showBigPicture = ({ url, likes, comments, description }) => {
 
   imageElement.src = url;
 
-  likesCount.textContent = likes;
+  likesCountElement.textContent = likes;
 
-  comment.textContent = comments.length;
+  commentElement.textContent = comments.length;
 
   descriptionPhoto.textContent = description;
 };

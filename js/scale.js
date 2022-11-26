@@ -1,3 +1,9 @@
+//создаем константы  мин и макс масштаб, масштаб по умолчанию и шаг масштабирования
+const SCALE_STEP = 25;
+const SCALE_MIN = 25;
+const SCALE_MAX = 100;
+const SCALE_DEFAULT = 100;
+
 //находим кнопки - и +
 const smallerButton = document.querySelector('.scale__control--smaller');
 const buggerButton = document.querySelector('.scale__control--bigger');
@@ -8,11 +14,6 @@ const scaleInputControl = document.querySelector('.scale__control--value');
 //находим окно предварительного просмотра изображения
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-//создаем константы  мин и макс масштаб, масштаб по умолчанию и шаг масштабирования
-const SCALE_STEP = 25;
-const SCALE_MIN = 25;
-const SCALE_MAX = 100;
-const SCALE_DEFAULT = 100;
 
 //функция которая вызывает масштабирование
 const scaleImage = (value = SCALE_DEFAULT) => {

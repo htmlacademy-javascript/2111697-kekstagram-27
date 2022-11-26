@@ -1,14 +1,5 @@
 const body = document.body;
 const ALERT_SHOW_TIME = 5000;
-/**
- * Функция для проверки максимальной длины строки.
- * @param {string} verifiedString Входная строка
- * @param {number} [maxLength = 56] Максимальная длина*
- * @param {boolean} result Подходит ли строка по длине
- */
-
-const checkMaxLengthString = (verifiedString, maxLength = 140) =>
-  verifiedString.length <= maxLength;
 
 /**
  * @param {KeyboardEvent} evt
@@ -49,13 +40,20 @@ const removeFormModalMessage = (modal, closeButton) => {
 
   modal.addEventListener('click', onModalClick);
 
-  const onDocumentKeydown = (evt) => {
+  /**
+   *
+   * @param {KeyboardEvent} evt
+   */
+
+  const onDocumentKeyDown = (evt) => {
+    evt.stopPropagation();
+
     if (isEscapeKey(evt)) {
       destroyModal();
     }
   };
 
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeyDown, true);
 
   const cancel = modal.querySelector(closeButton);
   cancel.addEventListener(
@@ -68,7 +66,7 @@ const removeFormModalMessage = (modal, closeButton) => {
 
   function destroyModal() {
     body.lastChild.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('keydown', onDocumentKeyDown);
     modal.removeEventListener('click', onModalClick);
   }
 };
@@ -80,8 +78,8 @@ const createFormModalMessage = (type) => {
   const templateSuccessMessage = document
     .querySelector('#success')
     .content.querySelector('.success');
-  const templateerrorMessage = document.querySelector('#error').content.querySelector('.error');
-  const template = type === 'success' ? templateSuccessMessage : templateerrorMessage;
+  const templateErrorMessage = document.querySelector('#error').content.querySelector('.error');
+  const template = type === 'success' ? templateSuccessMessage : templateErrorMessage;
 
   const buttonClass = type === 'success' ? '.success__button' : '.error__button';
 
@@ -149,19 +147,6 @@ const shuffleArray = (array) => {
   return array;
 };
 
-/**
- *Разметка каждого комментария должна выглядеть так:
-
-<li class="social__comment">
-    <img
-        class="social__picture"
-        src="{{аватар}}"
-        alt="{{имя комментатора}}"
-        width="35" height="35">
-    <p class="social__text">{{текст комментария}}</p>
-</li>
- */
-
 const createDOMElement = (element, elementClass) => {
   /**@type {HTMLElement} */
   const object = document.createElement(element);
@@ -169,5 +154,5 @@ const createDOMElement = (element, elementClass) => {
   return object;
 };
 
-export { isEscapeKey, checkMaxLengthString, showAlert, createFormModalMessage, debounce, throttle,
+export { isEscapeKey, showAlert, createFormModalMessage, debounce, throttle,
   shuffleArray,createDOMElement };
