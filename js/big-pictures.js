@@ -7,9 +7,9 @@ const fullPicture = document.querySelector('.big-picture');
 const imageElement = fullPicture.querySelector('.big-picture__img img');
 
 const likesCountElement = fullPicture.querySelector('.likes-count');
-//Количество комментариев comments подставьте как текстовое содержание элемента .comments-count.
+
 const commentElement = fullPicture.querySelector('.comments-count');
-//Описание фотографии description вставьте строкой в блок .social__caption.
+
 const descriptionPhoto = fullPicture.querySelector('.social__caption');
 const cancelButton = fullPicture.querySelector('.big-picture__cancel');
 

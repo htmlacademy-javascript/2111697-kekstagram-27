@@ -115,7 +115,7 @@ const onSliderUpdate = () => {
   if(isDefault()) {
     return;
   }
-  // получили эффект  и записываем в переменную
+
   const sliderValue = sliderElement.noUiSlider.get();
 
   //применяем фильтр к изображению imagePreview
