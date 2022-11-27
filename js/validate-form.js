@@ -20,7 +20,7 @@ const pristine = new Pristine(uploadForm, {
  * @param {string} value
  */
 const validateHashtags = (value) => {
-  const hashTags = value.toLowerCase().split(' ');
+  const hashTags = value.toLowerCase().split(' ').filter((hashtag) => hashtag.length);
 
   if (hashTags.length > 5) {
     hashtagsInput.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
@@ -57,6 +57,8 @@ const validateHashtags = (value) => {
       );
       return false;
     }
+
+    hashtagsInput.setCustomValidity('');
     return true;
   });
 };
