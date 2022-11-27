@@ -4,7 +4,6 @@ import { initComments } from './comments.js';
 const body = document.body;
 const fullPicture = document.querySelector('.big-picture');
 
-//Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
 const imageElement = fullPicture.querySelector('.big-picture__img img');
 //Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
 const likesCountElement = fullPicture.querySelector('.likes-count');
