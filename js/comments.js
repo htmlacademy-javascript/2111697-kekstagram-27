@@ -33,7 +33,7 @@ export const initComments = (wrapper) => {
   const initCommentsOnOpen = (comments) => {
     socialComments.innerHTML = '';
 
-    const renderNextSlice = () => {
+    const onButtonClick = () => {
       const nextSliceComments = comments.slice(
         showedComments.length,
         showedComments.length + COMMENTS_STEP
@@ -45,17 +45,17 @@ export const initComments = (wrapper) => {
       комментариев`;
 
       if (showedComments.length === comments.length) {
-        loadCommentsButton.removeEventListener('click', renderNextSlice);
+        loadCommentsButton.removeEventListener('click', onButtonClick);
         loadCommentsButton.hidden = true;
       }
     };
 
-    loadCommentsButton.addEventListener('click', renderNextSlice);
-    renderNextSlice();
+    loadCommentsButton.addEventListener('click', onButtonClick);
+    onButtonClick();
 
     const resetComments = () => {
       loadCommentsButton.hidden = false;
-      loadCommentsButton.removeEventListener('click', renderNextSlice);
+      loadCommentsButton.removeEventListener('click', onButtonClick);
       showedComments = [];
     };
     return resetComments;

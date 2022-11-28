@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {resetScale} from './scale.js';
+import {resetEffects} from './effects.js';
 
 const PHOTO_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -7,7 +8,7 @@ const PHOTO_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadForm = document.querySelector('.img-upload__form');
 
 /** @type {HTMLInputElement} поле загрузки нового изображения */
-const imgUploadStart = uploadForm.querySelector('#upload-file');
+const uploadInput = uploadForm.querySelector('#upload-file');
 
 // находим форму редактирования изображения
 const editFormImage = uploadForm.querySelector('.img-upload__overlay');
@@ -35,26 +36,41 @@ const onKeydownCloseModal = (evt) => {
   }
 };
 
-const onChangeModalState = (toOpen = true) => () => {
+const changeModalState = (toOpen = true) => {
   editFormImage.classList.toggle('hidden', !toOpen);
   document.body.classList.toggle('modal-open', toOpen);
-  const file = fileChooser.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = PHOTO_TYPES.some((it) => fileName.endsWith(it));
-  if(matches) {
-    selectedPhoto.src = URL.createObjectURL(file);
-  }
+
   //закрытие происходит по нажатию клавиши ESC
   if (toOpen) {
     document.addEventListener('keydown', onKeydownCloseModal);
   } else{
     document.removeEventListener('keydown', onKeydownCloseModal);
   }
-  resetScale();
 };
 
-imgUploadStart.addEventListener('change', onChangeModalState(true));
-uploadForm.addEventListener('reset', onChangeModalState(false));
+const updateImage = () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = PHOTO_TYPES.some((it) => fileName.endsWith(it));
+  if(matches) {
+    selectedPhoto.src = URL.createObjectURL(file);
+  }
+};
+
+const onUploadInputChange = () => {
+  changeModalState(true);
+  updateImage();
+};
+
+const onUploadFormReset = () => {
+  changeModalState(false);
+  resetScale();
+  resetEffects();
+};
+
+
+uploadInput.addEventListener('change', onUploadInputChange);
+uploadForm.addEventListener('reset', onUploadFormReset);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
