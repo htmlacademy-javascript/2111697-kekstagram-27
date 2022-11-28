@@ -67,7 +67,7 @@ export const initFilters = (photos) => {
     }
   };
 
-  const debounceClickHandler = debounce(onClick, 500);
+  const debouncedOnFilterClick = debounce(onClick, 500);
 
-  filtersForm.addEventListener('click', debounceClickHandler);
+  filtersForm.addEventListener('click', debouncedOnFilterClick);
 };
